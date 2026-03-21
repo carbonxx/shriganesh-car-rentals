@@ -145,7 +145,7 @@ function createCarCard(car) {
   // We'll use id to scroll from pills. E.g., "WagonR" => "card-wagonr"
   let sanitizedName = car.name.replace("Maruti ", "").replace("Renault ", "").replace("Toyota ", "").toLowerCase().replace(/\s+/g, '-');
   return `
-    <div class="car-card" id="card-${sanitizedName}">
+    <div class="car-card snap-item" id="card-${sanitizedName}">
       <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy">
       <h4 class="car-name">${car.name}</h4>
       <div class="car-price">₹${car.price}<span> /day</span></div>
@@ -162,7 +162,7 @@ function createCarCard(car) {
 function renderDestinations() {
   const destGrid = document.getElementById("destGrid");
   destGrid.innerHTML = destinations.map(dest => `
-    <div class="dest-card" onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">
+    <div class="dest-card snap-item" onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">
       <img src="${dest.image}" alt="${dest.name}" loading="lazy">
       <div class="dest-content">
         <h4>${dest.name}</h4>
