@@ -101,7 +101,7 @@ const destinations = [
 ];
 
 // Admin WhatsApp Number
-const ADMIN_WHATSAPP = "917204380284";
+const ADMIN_WHATSAPP = "919113217773";
 
 // Document Load
 document.addEventListener("DOMContentLoaded", () => {
