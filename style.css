@@ -40,6 +40,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a { text-decoration: none; color: inherit; transition: var(--transition); }
@@ -145,6 +146,7 @@ p { font-weight: 400; }
 .snap-carousel {
   display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory;
   padding-bottom: 40px; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 .snap-carousel::-webkit-scrollbar { display: none; }
 .snap-item { scroll-snap-align: start; flex: 0 0 calc(85% - 24px); }

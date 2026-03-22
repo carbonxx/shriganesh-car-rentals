@@ -127,6 +127,24 @@ function renderDestinations() {
 }
 
 function setupFormSubmission() {
+  const pickup = document.getElementById("pickupDate");
+  const drop = document.getElementById("dropDate");
+
+  const getMinDateTime = () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
+  };
+  
+  pickup.min = getMinDateTime();
+  
+  pickup.addEventListener("change", (e) => {
+    drop.min = e.target.value;
+    if (drop.value && drop.value < e.target.value) {
+      drop.value = e.target.value;
+    }
+  });
+
   const form = document.getElementById("bookingForm");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
