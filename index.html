@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShriGanesh Self Drive Car Rentals | Minimalist Booking</title>
-  <meta name="description" content="Affordable self drive car rentals in Mangalore. Book Alto, Baleno, Innova & more with easy WhatsApp booking.">
+  <title>ShriGanesh Rentals | Premium Fleet</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,18 +11,13 @@
   <!-- NAVBAR -->
   <header class="header">
     <div class="container">
-      <div class="logo">
-        <span class="icon">🚗</span>
-        <div class="brand">
-          <h1>ShriGanesh Rentals</h1>
-        </div>
+      <div class="brand">
+        <h1>ShriGanesh</h1>
       </div>
       <nav class="desktop-nav">
-        <a href="#hero">Home</a>
-        <a href="#cars">Fleet</a>
-        <a href="#destinations">Explore</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#booking" class="btn-primary">Book Now</a>
+        <a href="#fleet">Our Fleet</a>
+        <a href="#destinations">Drives</a>
+        <a href="#booking" class="btn-whatsapp" style="padding: 10px 24px; font-size: 0.9rem;">Book Now</a>
       </nav>
     </div>
   </header>
@@ -32,167 +26,104 @@
   <section id="hero" class="hero">
     <div class="container">
       <div class="hero-content">
-        <h1 class="hero-title">Refined Self-Drive Experiences</h1>
-        <p class="hero-tagline">Premium & affordable self-drive cars in Mangalore and Udupi. Book instantly via WhatsApp.</p>
-        <a href="#booking" class="btn-primary" style="background: white; color: black; padding: 16px 36px; font-size: 1.1rem;">Explore Fleet</a>
+        <h1 class="hero-title">Refined Self-Drive Experiences.</h1>
+        <p class="hero-tagline">Premium, affordable self-drive cars in Mangalore and Udupi. Book instantly via WhatsApp.</p>
+        <a href="#fleet" class="btn-primary">Explore Fleet</a>
       </div>
       
-      <div class="car-pills-container">
-        <div class="car-pills-scroll">
-          <button class="pill" data-target="Alto">Alto</button>
-          <button class="pill" data-target="WagonR">WagonR</button>
-          <button class="pill" data-target="Kwid">Kwid</button>
-          <button class="pill" data-target="Baleno">Baleno</button>
-          <button class="pill" data-target="Fronx">Fronx</button>
-          <button class="pill" data-target="Brezza">Brezza</button>
-          <button class="pill" data-target="Ertiga">Ertiga</button>
-          <button class="pill" data-target="Innova">Innova</button>
-          <button class="pill" data-target="Carens">Kia Carens</button>
+      <div class="jump-links">
+        <a href="#fleet" class="jump-link">5-Seater</a>
+        <a href="#fleet" class="jump-link">7-Seater</a>
+        <a href="#destinations" class="jump-link">Locations</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEET SECTION (Toggle) -->
+  <section id="fleet" class="section">
+    <div class="container">
+      <h2 class="section-title">The Premium Fleet</h2>
+      <p class="section-subtitle">Meticulously maintained vehicles for absolute comfort and safety.</p>
+
+      <div class="fleet-controls">
+        <div class="segmented-control">
+          <button class="segment active" data-type="5">5-Seater</button>
+          <button class="segment" data-type="7">7-Seater</button>
         </div>
+        <div class="fleet-badge" id="fleet-badge">Best for City & Solo Trips.</div>
+      </div>
+
+      <div class="snap-carousel" id="fleet-grid">
+        <!-- JS injected stagger-items -->
       </div>
     </div>
   </section>
 
-  <!-- CARS LISTING SECION -->
-  <section id="cars" class="section">
+  <!-- POPULAR DRIVES -->
+  <section id="destinations" class="section" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
-      <h2 class="section-title">Our Premium Fleet</h2>
-      <p class="section-subtitle">Meticulously maintained vehicles for your absolute comfort.</p>
-
-      <h3 class="category-header">5-Seater Vehicles</h3>
-      <!-- Using grid for desktop, but horizontally scrollable on mobile if needed via CSS -->
-      <div class="snap-carousel" id="grid-5-seater">
-        <!-- JS populated -->
-      </div>
-
-      <h3 class="category-header mt-8">7-Seater Vehicles</h3>
-      <div class="snap-carousel" id="grid-7-seater">
-        <!-- JS populated -->
-      </div>
-    </div>
-  </section>
-
-  <!-- POPULAR DESTINATIONS SCROLL CAROUSEL -->
-  <section id="destinations" class="section bg-light">
-    <div class="container">
-      <h2 class="section-title">Popular Destinations</h2>
-      <p class="section-subtitle">Rent a car and explore Karnataka & beyond. Swipe to discover.</p>
+      <h2 class="section-title">Popular Drives from Mangalore</h2>
+      <p class="section-subtitle">Rent a car and explore the ultimate cinematic routes of Karnataka and beyond.</p>
       
       <div class="snap-carousel destinations-carousel" id="destGrid">
-        <!-- JS populated -->
+        <!-- JS injected glass cards -->
       </div>
     </div>
   </section>
 
   <!-- BOOKING SECTION -->
-  <section id="booking" class="section booking-section">
+  <section id="booking" class="section">
     <div class="container">
-      <div class="booking-card">
-        <h2 class="section-title">Reservation Details</h2>
-        <p class="section-subtitle">Provide your requirements below. We will confirm availability instantly via WhatsApp.</p>
+      <div class="booking-card glass-card">
+        <h2 class="section-title" style="font-size: 2.2rem;">Reserve Your Car</h2>
+        <p class="section-subtitle" style="margin-bottom: 2rem;">Secure your dates instantly. Zero hidden fees.</p>
         
         <form class="booking-form" id="bookingForm">
           <div class="form-row">
             <div class="form-group">
-              <label for="fullName">Full Name</label>
-              <input type="text" id="fullName" placeholder="Enter your full name" required>
+              <label>Full Name</label>
+              <input type="text" id="fullName" placeholder="John Doe" required>
             </div>
             <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+              <label>Phone Number</label>
+              <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="pickupDate">Pickup Date & Time</label>
+              <label>Pickup Date & Time</label>
               <input type="datetime-local" id="pickupDate" required>
             </div>
             <div class="form-group">
-              <label for="dropDate">Drop Date & Time</label>
+              <label>Drop Date & Time</label>
               <input type="datetime-local" id="dropDate" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="selectedCar">Select Vehicle</label>
+              <label>Select Vehicle</label>
               <select id="selectedCar" required>
                 <option value="Not sure yet">Not sure yet</option>
-                <option value="Alto">Maruti Alto</option>
-                <option value="WagonR">Maruti WagonR</option>
-                <option value="Kwid">Renault Kwid</option>
-                <option value="Baleno">Maruti Baleno</option>
-                <option value="Fronx">Maruti Fronx</option>
-                <option value="Brezza">Maruti Brezza</option>
-                <option value="Ertiga">Maruti Ertiga</option>
-                <option value="Innova">Toyota Innova</option>
-                <option value="Innova Crysta">Toyota Innova Crysta</option>
+                <option value="Maruti Alto">Maruti Alto</option>
+                <option value="Maruti WagonR">Maruti WagonR</option>
+                <option value="Renault Kwid">Renault Kwid</option>
+                <option value="Maruti Baleno">Maruti Baleno</option>
+                <option value="Maruti Fronx">Maruti Fronx</option>
+                <option value="Maruti Brezza">Maruti Brezza</option>
+                <option value="Maruti Ertiga">Maruti Ertiga</option>
+                <option value="Toyota Innova">Toyota Innova</option>
+                <option value="Toyota Innova Crysta">Toyota Innova Crysta</option>
                 <option value="Kia Carens Clavis">Kia Carens Clavis</option>
               </select>
             </div>
-            <div class="form-group">
-              <label for="pickupLocation">Pickup Location</label>
-              <input type="text" id="pickupLocation" placeholder="Airport, Railway Station, etc." required>
-              <span class="help-text">₹400 extra for Airport/Railway. ₹200 for local limits.</span>
-            </div>
           </div>
 
-          <div class="form-group">
-            <label for="message">Additional Requirements</label>
-            <textarea id="message" rows="3" placeholder="Any specific needs or questions..."></textarea>
-          </div>
-
-          <button type="submit" class="btn-whatsapp w-full mt-4" style="padding: 18px; font-size: 1.1rem;">
-            Request via WhatsApp
+          <button type="submit" class="btn-whatsapp" style="width: 100%; padding: 18px; font-size: 1.15rem; margin-top: 20px;">
+            Book via WhatsApp
           </button>
         </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- REVIEWS SCRoLL CAROUSEL -->
-  <section id="reviews" class="section">
-    <div class="container">
-      <div class="trust-badges">
-        <div class="trust-badge">
-          <div class="trust-icon">🚗</div>
-          <h4>Premium Fleet</h4>
-        </div>
-        <div class="trust-badge">
-          <div class="trust-icon">🕐</div>
-          <h4>24/7 Support</h4>
-        </div>
-        <div class="trust-badge">
-          <div class="trust-icon">✅</div>
-          <h4>Zero Hidden Fees</h4>
-        </div>
-      </div>
-
-      <h2 class="section-title">Client Testimonials</h2>
-      <p class="section-subtitle">See what our customers have to say about our service.</p>
-
-      <div class="snap-carousel">
-        <div class="snap-item review-card">
-          <div class="stars">★★★★★</div>
-          <p>"The minimalist booking process was incredibly smooth. Got a brand new Baleno delivered perfectly on time."</p>
-          <h5>Rahul M.</h5>
-        </div>
-        <div class="snap-item review-card">
-          <div class="stars">★★★★★</div>
-          <p>"Rented an Innova for a family trip to Coorg. Great condition, ultra-clean interiors, and reasonable pricing."</p>
-          <h5>Sneha Shetty</h5>
-        </div>
-        <div class="snap-item review-card">
-          <div class="stars">★★★★★</div>
-          <p>"Truly highly professional service. The transparent pricing and WhatsApp communication made it effortless."</p>
-          <h5>Ankit Kumar</h5>
-        </div>
-        <div class="snap-item review-card">
-          <div class="stars">★★★★★</div>
-          <p>"Best car rental in Mangalore by far. The vehicle was flawless and the handover process took less than 2 minutes."</p>
-          <h5>Priya Desai</h5>
-        </div>
       </div>
     </div>
   </section>
@@ -200,31 +131,17 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <h3>ShriGanesh Rentals</h3>
-          <p style="color: #A3A3A3; max-width: 300px; margin-top: 10px;">Premium, affordable, and fully transparent self-drive car rentals in Mangalore & Udupi.</p>
-        </div>
-        <div class="footer-links">
-          <a href="#hero">Home</a>
-          <a href="#cars">Fleet</a>
-          <a href="#destinations">Destinations</a>
-          <a href="#booking">Book</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 ShriGanesh Self Drive Car Rentals. All rights reserved.</p>
-      </div>
+      <p class="footer-text">&copy; 2026 ShriGanesh Self Drive Car Rentals. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- MOBILE STICKY -->
+  <!-- MOBILE FROSTED BOTTOM BAR -->
   <div class="mobile-sticky-bar">
-    <a href="tel:+919113217773" class="sticky-btn btn-call">
-      <span>Call Now</span>
+    <a href="tel:+919113217773" class="sticky-btn btn-call-mobile">
+      📞 Call Now
     </a>
-    <a href="https://wa.me/919113217773?text=Hi,%20I%20want%20to%20book%20a%20self-drive%20car." target="_blank" class="sticky-btn btn-wa">
-      <span>WhatsApp</span>
+    <a href="https://wa.me/919113217773?text=Hi,%20I%20want%20to%20book%20a%20luxury%20self-drive%20car." target="_blank" class="sticky-btn btn-wa-mobile">
+      💬 WhatsApp
     </a>
   </div>
 
