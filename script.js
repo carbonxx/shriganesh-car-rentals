@@ -2,76 +2,134 @@
 const fleet = {
   fiveSeater: [
     {
-      name: "Maruti Alto",
-      price: 999,
+      name: "Maruti Ignis",
+      price: 1750,
       fuel: "Petrol",
       transmission: "Manual",
-      image: "assets/five_seater.png"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/2018_Suzuki_Ignis_SZ5_SHVS_Allgrip_1.2_Front.jpg/960px-2018_Suzuki_Ignis_SZ5_SHVS_Allgrip_1.2_Front.jpg"
     },
     {
-      name: "Maruti WagonR",
-      price: 1099,
+      name: "Maruti Swift",
+      price: 1850,
       fuel: "Petrol",
       transmission: "Manual",
-      image: "assets/five_seater.png"
-    },
-    {
-      name: "Renault Kwid",
-      price: 999,
-      fuel: "Petrol",
-      transmission: "Manual",
-      image: "assets/five_seater.png"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Suzuki_Swift_%282024%29_hybrid_DSC_6076.jpg/960px-Suzuki_Swift_%282024%29_hybrid_DSC_6076.jpg"
     },
     {
       name: "Maruti Baleno",
-      price: 1299,
+      price: 1950,
       fuel: "Petrol",
-      transmission: "Automatic",
-      image: "assets/five_seater.png"
+      transmission: "Manual",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Suzuki_Baleno_front_20071004.jpg/960px-Suzuki_Baleno_front_20071004.jpg"
     },
     {
       name: "Maruti Fronx",
-      price: 1399,
+      price: 2100,
       fuel: "Petrol",
-      transmission: "Automatic",
-      image: "assets/five_seater.png"
-    },
-    {
-      name: "Maruti Brezza",
-      price: 1499,
-      fuel: "Petrol",
-      transmission: "Automatic",
-      image: "assets/five_seater.png"
+      transmission: "Manual",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/2024_Suzuki_Fronx.jpg/960px-2024_Suzuki_Fronx.jpg"
     }
   ],
   sevenSeater: [
     {
-      name: "Kia Carens Clavis",
-      price: 1799,
-      fuel: "Diesel",
-      transmission: "Automatic",
-      image: "assets/seven_seater.png"
-    },
-    {
       name: "Maruti Ertiga",
-      price: 1599,
-      fuel: "Petrol",
+      price: 2700,
+      fuel: "CNG + Petrol",
       transmission: "Manual",
-      image: "assets/seven_seater.png"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Suzuki_Ertiga_NC_FL_1.5_GLX_Hybrid_Snow_White_Pearl.jpg/960px-Suzuki_Ertiga_NC_FL_1.5_GLX_Hybrid_Snow_White_Pearl.jpg"
     },
     {
       name: "Toyota Innova",
-      price: 1999,
+      price: 3100,
+      fuel: "Diesel",
+      transmission: "Manual",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/2022_Toyota_Kijang_Innova_2.4_G_GUN142R_%2820220302%29.jpg/960px-2022_Toyota_Kijang_Innova_2.4_G_GUN142R_%2820220302%29.jpg"
+    },
+    {
+      name: "Toyota Innova Crysta",
+      price: 4500,
+      fuel: "Diesel",
+      transmission: "Manual",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/2022_Toyota_Kijang_Innova_2.4_G_GUN142R_%2820220302%29.jpg/960px-2022_Toyota_Kijang_Innova_2.4_G_GUN142R_%2820220302%29.jpg"
+    },
+    {
+      name: "Maruti SCross",
+      price: 2200,
       fuel: "Diesel",
       transmission: "Manual",
       image: "assets/seven_seater.png"
     },
     {
-      name: "Toyota Innova Crysta",
-      price: 2299,
+      name: "Mahindra Marazzo",
+      price: 3000,
       fuel: "Diesel",
+      transmission: "Manual",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Mahindra_Marazzo_MPV_SEP_18_%281%29.jpg/960px-Mahindra_Marazzo_MPV_SEP_18_%281%29.jpg"
+    },
+    {
+      name: "KIA Carens",
+      price: 3200,
+      fuel: "Petrol",
+      transmission: "Manual",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/2025_Kia_Carens_Clavis_HTX_Plus.png/960px-2025_Kia_Carens_Clavis_HTX_Plus.png"
+    },
+    {
+      name: "KIA Carens Clavis",
+      price: 3500,
+      fuel: "Diesel",
+      transmission: "Manual",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/2025_Kia_Carens_Clavis_HTX_Plus.png/960px-2025_Kia_Carens_Clavis_HTX_Plus.png"
+    }
+  ],
+  automatic: [
+    {
+      name: "Maruti Ignis",
+      price: 1850,
+      fuel: "Petrol",
       transmission: "Automatic",
-      image: "assets/seven_seater.png"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/2018_Suzuki_Ignis_SZ5_SHVS_Allgrip_1.2_Front.jpg/960px-2018_Suzuki_Ignis_SZ5_SHVS_Allgrip_1.2_Front.jpg"
+    },
+    {
+      name: "Maruti Swift",
+      price: 1950,
+      fuel: "Petrol",
+      transmission: "Automatic",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Suzuki_Swift_%282024%29_hybrid_DSC_6076.jpg/960px-Suzuki_Swift_%282024%29_hybrid_DSC_6076.jpg"
+    },
+    {
+      name: "Maruti Baleno",
+      price: 2100,
+      fuel: "Petrol",
+      transmission: "Automatic",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Suzuki_Baleno_front_20071004.jpg/960px-Suzuki_Baleno_front_20071004.jpg"
+    },
+    {
+      name: "Maruti Fronx",
+      price: 2200,
+      fuel: "Petrol",
+      transmission: "Automatic",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/2024_Suzuki_Fronx.jpg/960px-2024_Suzuki_Fronx.jpg"
+    },
+    {
+      name: "Maruti Brezza",
+      price: 2450,
+      fuel: "Petrol",
+      transmission: "Automatic",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/2022_Maruti_Suzuki_Brezza_ZXi%2B_%28India%29_front_view_03.png/960px-2022_Maruti_Suzuki_Brezza_ZXi%2B_%28India%29_front_view_03.png"
+    },
+    {
+      name: "Hyundai Santro",
+      price: 1300,
+      fuel: "Petrol",
+      transmission: "Automatic",
+      image: "assets/five_seater.png"
+    },
+    {
+      name: "Nissan Magnite",
+      price: 1950,
+      fuel: "Petrol",
+      transmission: "Automatic",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Nissan_Magnite_2025_1.0_Exclusive_at_WTC_Montevideo_-_04.jpg/960px-Nissan_Magnite_2025_1.0_Exclusive_at_WTC_Montevideo_-_04.jpg"
     }
   ]
 };
@@ -115,9 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderCars() {
   const grid5 = document.getElementById("grid-5-seater");
   const grid7 = document.getElementById("grid-7-seater");
+  const gridAuto = document.getElementById("grid-automatic");
 
-  grid5.innerHTML = fleet.fiveSeater.map(car => createCarCard(car)).join("");
-  grid7.innerHTML = fleet.sevenSeater.map(car => createCarCard(car)).join("");
+  if(grid5) grid5.innerHTML = fleet.fiveSeater.map(car => createCarCard(car)).join("");
+  if(grid7) grid7.innerHTML = fleet.sevenSeater.map(car => createCarCard(car)).join("");
+  if(gridAuto) gridAuto.innerHTML = fleet.automatic.map(car => createCarCard(car)).join("");
 
   // Attach event listeners to Book Now buttons
   document.querySelectorAll(".book-car-btn").forEach(btn => {
