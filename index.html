@@ -32,34 +32,17 @@
 
   <!-- HERO SECTION -->
   <section id="hero" class="hero">
+    <div class="hero-bg-img"></div>
     <div class="hero-content">
       <h1 class="hero-title">ShriGanesh Self Drive Cars</h1>
       <p class="hero-tagline">Affordable & Easy Self Drive Cars Near You</p>
       <a href="#booking" class="btn-primary btn-large">Book Now</a>
     </div>
 
-    <div class="car-pills-container">
-      <div class="car-pills-scroll">
-        <button class="pill" data-target="Ignis">Ignis</button>
-        <button class="pill" data-target="Swift">Swift</button>
-        <button class="pill" data-target="Baleno">Baleno</button>
-        <button class="pill" data-target="Fronx">Fronx</button>
-        <button class="pill" data-target="Ertiga">Ertiga</button>
-        <button class="pill" data-target="Innova">Innova</button>
-        <button class="pill" data-target="Innova Crysta">Innova Crysta</button>
-        <button class="pill" data-target="SCross">S-Cross</button>
-        <button class="pill" data-target="Marazzo">Marazzo</button>
-        <button class="pill" data-target="Carens">Carens</button>
-        <button class="pill" data-target="Carens Clavis">Carens Clavis</button>
-        <button class="pill" data-target="Brezza">Brezza</button>
-        <button class="pill" data-target="Santro">Santro</button>
-        <button class="pill" data-target="Magnite">Magnite</button>
-      </div>
-    </div>
   </section>
 
   <!-- CARS LISTING SECTION -->
-  <section id="cars" class="section bg-light">
+  <section id="cars" class="section bg-light reveal">
     <div class="container">
       <h2 class="section-title">Our Fleet</h2>
       <p class="section-subtitle">Choose from our well-maintained range of cars</p>
@@ -67,28 +50,40 @@
       <div class="category-header">
         <h3>Manual Cars (5-Seater)</h3>
       </div>
-      <div class="car-grid" id="grid-5-seater">
-        <!-- JS will populate these -->
+      <div class="carousel-wrapper">
+        <button class="carousel-btn left" data-target="grid-5-seater">&#8592;</button>
+        <div class="car-carousel" id="grid-5-seater">
+          <!-- JS will populate these -->
+        </div>
+        <button class="carousel-btn right" data-target="grid-5-seater">&#8594;</button>
       </div>
 
       <div class="category-header">
         <h3>Manual Cars (7-Seater)</h3>
       </div>
-      <div class="car-grid" id="grid-7-seater">
-        <!-- JS will populate these -->
+      <div class="carousel-wrapper">
+        <button class="carousel-btn left" data-target="grid-7-seater">&#8592;</button>
+        <div class="car-carousel" id="grid-7-seater">
+          <!-- JS will populate these -->
+        </div>
+        <button class="carousel-btn right" data-target="grid-7-seater">&#8594;</button>
       </div>
 
       <div class="category-header">
         <h3>Automatic Cars</h3>
       </div>
-      <div class="car-grid" id="grid-automatic">
-        <!-- JS will populate these -->
+      <div class="carousel-wrapper">
+        <button class="carousel-btn left" data-target="grid-automatic">&#8592;</button>
+        <div class="car-carousel" id="grid-automatic">
+          <!-- JS will populate these -->
+        </div>
+        <button class="carousel-btn right" data-target="grid-automatic">&#8594;</button>
       </div>
     </div>
   </section>
 
   <!-- BOOKING FORM SECTION -->
-  <section id="booking" class="section">
+  <section id="booking" class="section booking-section reveal">
     <div class="container">
       <div class="booking-card">
         <h2 class="section-title">Book Your Car</h2>
@@ -159,7 +154,7 @@
   </section>
 
   <!-- DESTINATIONS SECTION -->
-  <section id="destinations" class="section bg-light">
+  <section id="destinations" class="section bg-light reveal">
     <div class="container">
       <h2 class="section-title">Popular Destinations</h2>
       <p class="section-subtitle">Rent a car and explore Karnataka & beyond</p>
@@ -170,7 +165,7 @@
   </section>
 
   <!-- TRUST SECTION -->
-  <section class="section trust-section">
+  <section class="section trust-section reveal">
     <div class="container">
       <div class="trust-badges">
         <div class="badge">
@@ -211,9 +206,9 @@
   </section>
 
   <!-- CONTACT & LOCATION SUMMARY -->
-  <section id="contact" class="section bg-dark text-white text-center">
+  <section id="contact" class="section bg-dark text-center reveal">
     <div class="container">
-      <h2 class="section-title text-white">Contact & Location</h2>
+      <h2 class="section-title">Contact & Location</h2>
       <div class="contact-buttons">
         <a href="tel:+919113217773" class="btn-primary btn-large box-shadow">📞 Call Now</a>
         <a href="https://wa.me/919113217773?text=Hi,%20I%20want%20to%20book%20a%20self-drive%20car.%20Please%20share%20available%20cars." target="_blank" class="btn-whatsapp btn-large box-shadow">💬 WhatsApp Us</a>

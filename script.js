@@ -165,8 +165,10 @@ const ADMIN_WHATSAPP = "919113217773";
 document.addEventListener("DOMContentLoaded", () => {
   renderCars();
   renderDestinations();
-  setupPills();
+  setupCarousels();
   setupFormSubmission();
+  setupScrollAnimations();
+  setupHeaderScroll();
 });
 
 // Render Car Cards
@@ -202,18 +204,20 @@ function renderCars() {
 }
 
 function createCarCard(car) {
-  // We'll use id to scroll from pills. E.g., "WagonR" => "card-wagonr"
-  let sanitizedName = car.name.replace("Maruti ", "").replace("Renault ", "").replace("Toyota ", "").toLowerCase().replace(/\s+/g, '-');
+  let sanitizedName = car.name.replace("Maruti ", "").replace("Renault ", "").replace("Toyota ", "").replace("Hyundai ", "").replace("Nissan ", "").replace("KIA ", "").replace("Mahindra ", "").toLowerCase().replace(/\s+/g, '-');
+  
+  // Extract brand and model
+  let parts = car.name.split(" ");
+  let brand = parts[0];
+  let model = parts.slice(1).join(" ");
+  
   return `
-    <div class="car-card" id="card-${sanitizedName}">
+    <div class="car-card" id="card-${sanitizedName}" onclick="document.getElementById('selectedCar').value = '${car.name}'; document.getElementById('booking').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer;">
       <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy">
-      <h4 class="car-name">${car.name}</h4>
-      <div class="car-price">₹${car.price}<span> /day</span></div>
-      <div class="car-badges">
-        <span class="badge-tag">⛽ ${car.fuel}</span>
-        <span class="badge-tag">⚙️ ${car.transmission}</span>
+      <div class="car-info-row">
+        <span class="car-brand">🚖 ${brand}</span>
+        <h4 class="car-model">${model}</h4>
       </div>
-      <button class="btn-primary w-full book-car-btn mt-auto" data-car="${car.name.replace("Maruti ", "").replace("Renault ", "").replace("Toyota ", "")}">Book Now</button>
     </div>
   `;
 }
@@ -233,32 +237,24 @@ function renderDestinations() {
   `).join("");
 }
 
-// Setup Pills
-function setupPills() {
-  const pills = document.querySelectorAll(".pill");
-  pills.forEach(pill => {
-    pill.addEventListener("click", () => {
-      const targetName = pill.getAttribute("data-target").toLowerCase().replace(/\s+/g, '-');
-      const card = document.getElementById(`card-${targetName}`);
-      if (card) {
-        // Offset scroll slightly to account for fixed header
-        const headerOffset = 80;
-        const elementPosition = card.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-        
-        // Slight highlight animation
-        card.style.transform = "scale(1.03)";
-        card.style.borderColor = "var(--primary)";
-        setTimeout(() => {
-          card.style.transform = "";
-          card.style.borderColor = "";
-        }, 1000);
-      }
+// Setup Carousels
+function setupCarousels() {
+  const leftBtns = document.querySelectorAll('.carousel-btn.left');
+  const rightBtns = document.querySelectorAll('.carousel-btn.right');
+
+  leftBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const carousel = document.getElementById(targetId);
+      carousel.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+  });
+
+  rightBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const carousel = document.getElementById(targetId);
+      carousel.scrollBy({ left: 300, behavior: 'smooth' });
     });
   });
 }
@@ -303,5 +299,40 @@ Message: ${message || 'No special requirements'}`;
 
     // Open WhatsApp
     window.open(whatsappUrl, "_blank");
+  });
+}
+
+// Scroll Animations (Intersection Observer)
+function setupScrollAnimations() {
+  const reveals = document.querySelectorAll(".reveal");
+  
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+        observer.unobserve(entry.target); // Only animate once
+      }
+    });
+  }, observerOptions);
+
+  reveals.forEach(reveal => {
+    observer.observe(reveal);
+  });
+}
+
+// Header Scroll Effect
+function setupHeaderScroll() {
+  const header = document.querySelector(".header");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
   });
 }
