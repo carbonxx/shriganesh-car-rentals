@@ -20,7 +20,7 @@ const fleet = {
       price: 1950,
       fuel: "Petrol",
       transmission: "Manual",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Suzuki_Baleno_front_20071004.jpg/960px-Suzuki_Baleno_front_20071004.jpg"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/2017_Suzuki_Baleno_SZ3_Dualjet_1.2_Front.jpg/960px-2017_Suzuki_Baleno_SZ3_Dualjet_1.2_Front.jpg"
     },
     {
       name: "Maruti Fronx",
@@ -57,7 +57,7 @@ const fleet = {
       price: 2200,
       fuel: "Diesel",
       transmission: "Manual",
-      image: "assets/seven_seater.png"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/2017_Suzuki_SX4_S-Cross_%28Indonesia%29_front_view.jpg/960px-2017_Suzuki_SX4_S-Cross_%28Indonesia%29_front_view.jpg"
     },
     {
       name: "Mahindra Marazzo",
@@ -101,7 +101,7 @@ const fleet = {
       price: 2100,
       fuel: "Petrol",
       transmission: "Automatic",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Suzuki_Baleno_front_20071004.jpg/960px-Suzuki_Baleno_front_20071004.jpg"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/2017_Suzuki_Baleno_SZ3_Dualjet_1.2_Front.jpg/960px-2017_Suzuki_Baleno_SZ3_Dualjet_1.2_Front.jpg"
     },
     {
       name: "Maruti Fronx",
@@ -122,7 +122,7 @@ const fleet = {
       price: 1300,
       fuel: "Petrol",
       transmission: "Automatic",
-      image: "assets/five_seater.png"
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Hyundai_Atos_1.1_Plus_2022.jpg/960px-Hyundai_Atos_1.1_Plus_2022.jpg"
     },
     {
       name: "Nissan Magnite",
