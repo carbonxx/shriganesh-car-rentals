@@ -53,7 +53,7 @@ const fleet = {
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/2022_Toyota_Kijang_Innova_2.4_G_GUN142R_%2820220302%29.jpg/960px-2022_Toyota_Kijang_Innova_2.4_G_GUN142R_%2820220302%29.jpg"
     },
     {
-      name: "Maruti SCross",
+      name: "Maruti S-Cross",
       price: 2200,
       fuel: "Diesel",
       transmission: "Manual",
@@ -164,12 +164,19 @@ const ADMIN_WHATSAPP = "919113217773";
 // Document Load
 document.addEventListener("DOMContentLoaded", () => {
   renderCars();
+  renderCarOptions();
   renderDestinations();
   setupCarousels();
   setupFormSubmission();
   setupScrollAnimations();
   setupHeaderScroll();
+  setupMobileNav();
 });
+
+// Same car can exist as Manual and Automatic, so include transmission in the label
+function carLabel(car) {
+  return `${car.name} (${car.transmission})`;
+}
 
 // Render Car Cards
 function renderCars() {
@@ -181,45 +188,54 @@ function renderCars() {
   if(grid7) grid7.innerHTML = fleet.sevenSeater.map(car => createCarCard(car)).join("");
   if(gridAuto) gridAuto.innerHTML = fleet.automatic.map(car => createCarCard(car)).join("");
 
-  // Attach event listeners to Book Now buttons
-  document.querySelectorAll(".book-car-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const carName = e.target.getAttribute("data-car");
-      
-      // Auto-fill form
-      const select = document.getElementById("selectedCar");
-      
-      // Find the option that matches or contains the carName
-      for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].text.includes(carName) || select.options[i].value === carName) {
-          select.selectedIndex = i;
-          break;
-        }
-      }
-
-      // Smooth scroll to form
+  // Clicking a card pre-selects that car in the booking form
+  document.querySelectorAll(".car-card").forEach(card => {
+    const selectCar = () => {
+      document.getElementById("selectedCar").value = card.dataset.car;
       document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
+    };
+    card.addEventListener("click", selectCar);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        selectCar();
+      }
     });
   });
 }
 
 function createCarCard(car) {
-  let sanitizedName = car.name.replace("Maruti ", "").replace("Renault ", "").replace("Toyota ", "").replace("Hyundai ", "").replace("Nissan ", "").replace("KIA ", "").replace("Mahindra ", "").toLowerCase().replace(/\s+/g, '-');
-  
   // Extract brand and model
   let parts = car.name.split(" ");
   let brand = parts[0];
   let model = parts.slice(1).join(" ");
-  
+
   return `
-    <div class="car-card" id="card-${sanitizedName}" onclick="document.getElementById('selectedCar').value = '${car.name}'; document.getElementById('booking').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer;">
+    <div class="car-card" data-car="${carLabel(car)}" role="button" tabindex="0" aria-label="Book ${carLabel(car)}">
       <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy">
       <div class="car-info-row">
         <span class="car-brand">🚖 ${brand}</span>
         <h4 class="car-model">${model}</h4>
       </div>
+      <div class="car-specs">
+        <span>⛽ ${car.fuel}</span>
+        <span>⚙️ ${car.transmission}</span>
+      </div>
+      <div class="car-price-row">
+        <span class="car-price">₹${car.price.toLocaleString("en-IN")}<small>/day</small></span>
+        <span class="car-book-link">Book →</span>
+      </div>
     </div>
   `;
+}
+
+// Build the car dropdown from the fleet so it always matches the cards
+function renderCarOptions() {
+  const select = document.getElementById("selectedCar");
+  const allCars = [...fleet.fiveSeater, ...fleet.sevenSeater, ...fleet.automatic];
+  select.insertAdjacentHTML("beforeend", allCars.map(car =>
+    `<option value="${carLabel(car)}">${carLabel(car)} – ₹${car.price.toLocaleString("en-IN")}/day</option>`
+  ).join(""));
 }
 
 // Render Destinations
@@ -262,8 +278,32 @@ function setupCarousels() {
 // Form Submission
 function setupFormSubmission() {
   const form = document.getElementById("bookingForm");
+  const pickupInput = document.getElementById("pickupDate");
+  const dropInput = document.getElementById("dropDate");
+
+  // datetime-local expects "YYYY-MM-DDTHH:MM" in local time
+  const toLocalInputValue = (date) => {
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+
+  // No bookings in the past, and drop must be after pickup
+  pickupInput.min = toLocalInputValue(new Date());
+  const validateDates = () => {
+    dropInput.min = pickupInput.value || pickupInput.min;
+    if (pickupInput.value && dropInput.value && dropInput.value <= pickupInput.value) {
+      dropInput.setCustomValidity("Drop date & time must be after pickup.");
+    } else {
+      dropInput.setCustomValidity("");
+    }
+  };
+  pickupInput.addEventListener("change", validateDates);
+  dropInput.addEventListener("change", validateDates);
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    validateDates();
+    if (!form.reportValidity()) return;
 
     const name = document.getElementById("fullName").value;
     const phone = document.getElementById("phone").value;
@@ -323,6 +363,22 @@ function setupScrollAnimations() {
   reveals.forEach(reveal => {
     observer.observe(reveal);
   });
+}
+
+// Mobile / Tablet Menu Toggle
+function setupMobileNav() {
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.getElementById("siteNav");
+
+  const setOpen = (open) => {
+    nav.classList.toggle("open", open);
+    toggle.setAttribute("aria-expanded", open);
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    toggle.textContent = open ? "✕" : "☰";
+  };
+
+  toggle.addEventListener("click", () => setOpen(!nav.classList.contains("open")));
+  nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => setOpen(false)));
 }
 
 // Header Scroll Effect
