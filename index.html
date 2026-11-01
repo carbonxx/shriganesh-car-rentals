@@ -21,7 +21,8 @@
         <p>Self Drive Car Rentals</p>
       </div>
     </div>
-    <nav class="desktop-nav">
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">☰</button>
+    <nav class="desktop-nav" id="siteNav">
       <a href="#hero">Home</a>
       <a href="#cars">Cars</a>
       <a href="#destinations">Explore</a>
@@ -97,7 +98,7 @@
             </div>
             <div class="form-group">
               <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" pattern="[\+0-9\s]+" required>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" pattern="(\+?91 ?|0)?[6-9][0-9]{4} ?[0-9]{5}" title="Enter a 10-digit Indian mobile number, e.g. +91 98765 43210" required>
             </div>
           </div>
 
@@ -117,20 +118,7 @@
               <label for="selectedCar">Selected Car</label>
               <select id="selectedCar" name="selectedCar" required>
                 <option value="Not sure yet">Not sure yet</option>
-                <option value="Ignis">Maruti Ignis</option>
-                <option value="Swift">Maruti Swift</option>
-                <option value="Baleno">Maruti Baleno</option>
-                <option value="Fronx">Maruti Fronx</option>
-                <option value="Ertiga">Maruti Ertiga</option>
-                <option value="Innova">Toyota Innova</option>
-                <option value="Innova Crysta">Toyota Innova Crysta</option>
-                <option value="SCross">Maruti S-Cross</option>
-                <option value="Marazzo">Mahindra Marazzo</option>
-                <option value="Carens">KIA Carens</option>
-                <option value="Carens Clavis">KIA Carens Clavis</option>
-                <option value="Brezza">Maruti Brezza</option>
-                <option value="Santro">Hyundai Santro</option>
-                <option value="Magnite">Nissan Magnite</option>
+                <!-- JS adds one option per car from the fleet data -->
               </select>
             </div>
             <div class="form-group">
