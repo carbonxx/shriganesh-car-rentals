@@ -166,12 +166,20 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCars();
   renderCarOptions();
   renderDestinations();
-  setupCarousels();
+  renderPageFacts();
+  setupFleetFilter();
   setupFormSubmission();
   setupScrollAnimations();
   setupHeaderScroll();
   setupMobileNav();
 });
+
+// Labels shown on each card for its fleet group
+const categoryLabels = {
+  fiveSeater: "5-seater",
+  sevenSeater: "7-seater",
+  automatic: "Automatic"
+};
 
 // Same car can exist as Manual and Automatic, so include transmission in the label
 function carLabel(car) {
@@ -180,13 +188,10 @@ function carLabel(car) {
 
 // Render Car Cards
 function renderCars() {
-  const grid5 = document.getElementById("grid-5-seater");
-  const grid7 = document.getElementById("grid-7-seater");
-  const gridAuto = document.getElementById("grid-automatic");
-
-  if(grid5) grid5.innerHTML = fleet.fiveSeater.map(car => createCarCard(car)).join("");
-  if(grid7) grid7.innerHTML = fleet.sevenSeater.map(car => createCarCard(car)).join("");
-  if(gridAuto) gridAuto.innerHTML = fleet.automatic.map(car => createCarCard(car)).join("");
+  const grid = document.getElementById("carGrid");
+  grid.innerHTML = Object.keys(fleet)
+    .map(category => fleet[category].map(car => createCarCard(car, category)).join(""))
+    .join("");
 
   // Clicking a card pre-selects that car in the booking form
   document.querySelectorAll(".car-card").forEach(card => {
@@ -204,29 +209,58 @@ function renderCars() {
   });
 }
 
-function createCarCard(car) {
+function createCarCard(car, category) {
   // Extract brand and model
   let parts = car.name.split(" ");
   let brand = parts[0];
   let model = parts.slice(1).join(" ");
+  const gearIcon = car.transmission === "Automatic" ? "ti-automatic-gearbox" : "ti-manual-gearbox";
 
   return `
-    <div class="car-card" data-car="${carLabel(car)}" role="button" tabindex="0" aria-label="Book ${carLabel(car)}">
-      <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy">
-      <div class="car-info-row">
-        <span class="car-brand">🚖 ${brand}</span>
-        <h4 class="car-model">${model}</h4>
+    <article class="car-card" data-car="${carLabel(car)}" data-category="${category}" role="button" tabindex="0" aria-label="Book ${carLabel(car)}">
+      <div class="car-media">
+        <span class="car-tag">${categoryLabels[category]}</span>
+        <img src="${car.image}" alt="${car.name}" loading="lazy">
       </div>
-      <div class="car-specs">
-        <span>⛽ ${car.fuel}</span>
-        <span>⚙️ ${car.transmission}</span>
+      <div class="car-body">
+        <p class="car-brand">${brand}</p>
+        <h3 class="car-model">${model}</h3>
+        <ul class="car-specs">
+          <li><i class="ti ti-gas-station" aria-hidden="true"></i>${car.fuel}</li>
+          <li><i class="ti ${gearIcon}" aria-hidden="true"></i>${car.transmission}</li>
+        </ul>
+        <div class="car-footer">
+          <span class="car-price">₹${car.price.toLocaleString("en-IN")}<small>/day</small></span>
+          <span class="btn btn-primary btn-sm">Book <i class="ti ti-arrow-right" aria-hidden="true"></i></span>
+        </div>
       </div>
-      <div class="car-price-row">
-        <span class="car-price">₹${car.price.toLocaleString("en-IN")}<small>/day</small></span>
-        <span class="car-book-link">Book →</span>
-      </div>
-    </div>
+    </article>
   `;
+}
+
+// Fleet filter tabs (All / 5-seater / 7-seater / Automatic)
+function setupFleetFilter() {
+  const tabs = document.querySelectorAll(".filter-tab");
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      const filter = tab.dataset.filter;
+      tabs.forEach(t => {
+        t.classList.toggle("is-active", t === tab);
+        t.setAttribute("aria-pressed", t === tab);
+      });
+      document.querySelectorAll(".car-card").forEach(card => {
+        card.hidden = filter !== "all" && card.dataset.category !== filter;
+      });
+    });
+  });
+}
+
+// Keep the "starting from" price and footer year in sync with the data
+function renderPageFacts() {
+  const allCars = Object.values(fleet).flat();
+  const lowest = Math.min(...allCars.map(car => car.price));
+  document.getElementById("priceFrom").textContent = `₹${lowest.toLocaleString("en-IN")}`;
+  document.getElementById("year").textContent = new Date().getFullYear();
 }
 
 // Build the car dropdown from the fleet so it always matches the cards
@@ -242,37 +276,15 @@ function renderCarOptions() {
 function renderDestinations() {
   const destGrid = document.getElementById("destGrid");
   destGrid.innerHTML = destinations.map(dest => `
-    <div class="dest-card" onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">
+    <a href="#booking" class="dest-card">
       <img src="${dest.image}" alt="${dest.name}" loading="lazy">
       <div class="dest-content">
-        <h4>${dest.name}</h4>
+        <h3>${dest.name}</h3>
         <p>${dest.subtitle}</p>
-        <button class="btn-primary-small">Book a Car to Visit</button>
+        <span class="dest-link">Book a car to visit <i class="ti ti-arrow-right" aria-hidden="true"></i></span>
       </div>
-    </div>
+    </a>
   `).join("");
-}
-
-// Setup Carousels
-function setupCarousels() {
-  const leftBtns = document.querySelectorAll('.carousel-btn.left');
-  const rightBtns = document.querySelectorAll('.carousel-btn.right');
-
-  leftBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-target');
-      const carousel = document.getElementById(targetId);
-      carousel.scrollBy({ left: -300, behavior: 'smooth' });
-    });
-  });
-
-  rightBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-target');
-      const carousel = document.getElementById(targetId);
-      carousel.scrollBy({ left: 300, behavior: 'smooth' });
-    });
-  });
 }
 
 // Form Submission
@@ -374,7 +386,7 @@ function setupMobileNav() {
     nav.classList.toggle("open", open);
     toggle.setAttribute("aria-expanded", open);
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    toggle.textContent = open ? "✕" : "☰";
+    toggle.innerHTML = `<i class="ti ${open ? "ti-x" : "ti-menu-2"}" aria-hidden="true"></i>`;
   };
 
   toggle.addEventListener("click", () => setOpen(!nav.classList.contains("open")));
