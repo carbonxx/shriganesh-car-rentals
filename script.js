@@ -168,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderDestinations();
   renderPageFacts();
   setupFleetFilter();
+  setupSearchBar();
   setupFormSubmission();
   setupScrollAnimations();
   setupHeaderScroll();
@@ -239,28 +240,71 @@ function createCarCard(car, category) {
 }
 
 // Fleet filter tabs (All / 5-seater / 7-seater / Automatic)
-function setupFleetFilter() {
-  const tabs = document.querySelectorAll(".filter-tab");
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      const filter = tab.dataset.filter;
-      tabs.forEach(t => {
-        t.classList.toggle("is-active", t === tab);
-        t.setAttribute("aria-pressed", t === tab);
-      });
-      document.querySelectorAll(".car-card").forEach(card => {
-        card.hidden = filter !== "all" && card.dataset.category !== filter;
-      });
-    });
+function applyFleetFilter(filter) {
+  document.querySelectorAll(".filter-tab").forEach(t => {
+    const active = t.dataset.filter === filter;
+    t.classList.toggle("is-active", active);
+    t.setAttribute("aria-pressed", active);
+  });
+  document.querySelectorAll(".car-card").forEach(card => {
+    card.hidden = filter !== "all" && card.dataset.category !== filter;
   });
 }
 
-// Keep the "starting from" price and footer year in sync with the data
+function setupFleetFilter() {
+  document.querySelectorAll(".filter-tab").forEach(tab => {
+    tab.addEventListener("click", () => applyFleetFilter(tab.dataset.filter));
+  });
+}
+
+// Keep the "starting from" prices and footer year in sync with the data
 function renderPageFacts() {
   const allCars = Object.values(fleet).flat();
-  const lowest = Math.min(...allCars.map(car => car.price));
-  document.getElementById("priceFrom").textContent = `₹${lowest.toLocaleString("en-IN")}`;
+  const lowest = `₹${Math.min(...allCars.map(car => car.price)).toLocaleString("en-IN")}`;
+  document.getElementById("priceFrom").textContent = lowest;
+  document.querySelectorAll(".price-from").forEach(el => el.textContent = lowest);
   document.getElementById("year").textContent = new Date().getFullYear();
+}
+
+// datetime-local expects "YYYY-MM-DDTHH:MM" in local time
+function toLocalInputValue(date) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+// No bookings in the past, and drop must be after pickup. Returns a re-check function.
+function setupDateRange(pickupInput, dropInput) {
+  pickupInput.min = toLocalInputValue(new Date());
+  const validateDates = () => {
+    dropInput.min = pickupInput.value || pickupInput.min;
+    if (pickupInput.value && dropInput.value && dropInput.value <= pickupInput.value) {
+      dropInput.setCustomValidity("Drop date & time must be after pickup.");
+    } else {
+      dropInput.setCustomValidity("");
+    }
+  };
+  pickupInput.addEventListener("change", validateDates);
+  dropInput.addEventListener("change", validateDates);
+  return validateDates;
+}
+
+// Hero search bar: filter the fleet and carry the dates into the booking form
+function setupSearchBar() {
+  const form = document.getElementById("searchForm");
+  const pickup = document.getElementById("searchPickup");
+  const drop = document.getElementById("searchDrop");
+  const validateDates = setupDateRange(pickup, drop);
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    validateDates();
+    if (!form.reportValidity()) return;
+
+    document.getElementById("pickupDate").value = pickup.value;
+    document.getElementById("dropDate").value = drop.value;
+    applyFleetFilter(document.getElementById("searchType").value);
+    document.getElementById("cars").scrollIntoView({ behavior: "smooth" });
+  });
 }
 
 // Build the car dropdown from the fleet so it always matches the cards
@@ -292,25 +336,7 @@ function setupFormSubmission() {
   const form = document.getElementById("bookingForm");
   const pickupInput = document.getElementById("pickupDate");
   const dropInput = document.getElementById("dropDate");
-
-  // datetime-local expects "YYYY-MM-DDTHH:MM" in local time
-  const toLocalInputValue = (date) => {
-    const pad = (n) => String(n).padStart(2, "0");
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-  };
-
-  // No bookings in the past, and drop must be after pickup
-  pickupInput.min = toLocalInputValue(new Date());
-  const validateDates = () => {
-    dropInput.min = pickupInput.value || pickupInput.min;
-    if (pickupInput.value && dropInput.value && dropInput.value <= pickupInput.value) {
-      dropInput.setCustomValidity("Drop date & time must be after pickup.");
-    } else {
-      dropInput.setCustomValidity("");
-    }
-  };
-  pickupInput.addEventListener("change", validateDates);
-  dropInput.addEventListener("change", validateDates);
+  const validateDates = setupDateRange(pickupInput, dropInput);
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
